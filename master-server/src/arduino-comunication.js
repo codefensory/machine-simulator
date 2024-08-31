@@ -28,19 +28,22 @@ comPort.on("open", () => {
 });
 
 parser.on("data", (data) => {
-  console.log("arduino without filters > ", data);
+  console.log("arduino > ", data);
 
-  // if (data.startsWith("[E]")) {
-  //   const command = data.slice(3);
+  if (data.startsWith("[E]")) {
+    const command = data.slice(3);
 
-  //   console.log("arduino >", data, "resend event");
+    console.log("arduino >", data, "resend event");
 
-  //   sendCommand(command);
+    sendCommand(command);
 
-  //   return;
-  // }
+    return;
+  }
+
+  // console.log("arduino >", data);
 
   // if (data.startsWith("[R]") && pendingCommand !== "") {
+
   //   const command = data.slice(3);
 
   //   if (command === pendingCommand) {
@@ -67,8 +70,8 @@ parser.on("data", (data) => {
 
   //   console.log("arduino >", data, "retring");
 
-    // return;
-  }
+  //   return;
+  // }
 
   const sendEvent = events.find((event) => event.event === data);
 
