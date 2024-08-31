@@ -3,7 +3,7 @@ const { ReadlineParser } = require("@serialport/parser-readline");
 
 const events = [];
 
-const comPort = new SerialPort({ baudRate: 9600, path: process.argv[2] });
+const comPort = new SerialPort({ baudRate: 115200, path: process.argv[2] });
 
 const parser = comPort.pipe(new ReadlineParser({ delimiter: "\n" })); // Read the port data
 
@@ -38,7 +38,7 @@ parser.on("data", (data) => {
     return;
   }
 
-  if (data.startsWith("[R]")) {
+  if (data.startsWith("[R]") && pendingCommand !== "") {
     const command = data.slice(3);
 
     if (command === pendingCommand) {
