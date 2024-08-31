@@ -115,13 +115,13 @@ arduino.on("p", () => {
   changeState(states.EXPLICACION);
 });
 
-arduino.on("0", () => {
+arduino.on("Sensor 1 triggered", () => {
   console.log("Rele 1");
 
   changeState(states.CIBER_ATAQUE);
 });
 
-arduino.on("1", () => {
+arduino.on("Sensor 2 triggered", () => {
   console.log("Rele 2");
 
   changeState(states.AGRADECIMIENTO);
