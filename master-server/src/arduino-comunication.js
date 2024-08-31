@@ -28,47 +28,47 @@ comPort.on("open", () => {
 });
 
 parser.on("data", (data) => {
-  if (data.startsWith("[E]")) {
-    const command = data.slice(3);
+  console.log("arduino without filters > ", data);
 
-    console.log("arduino >", data, "resend event");
+  // if (data.startsWith("[E]")) {
+  //   const command = data.slice(3);
 
-    sendCommand(command);
+  //   console.log("arduino >", data, "resend event");
 
-    return;
+  //   sendCommand(command);
+
+  //   return;
+  // }
+
+  // if (data.startsWith("[R]") && pendingCommand !== "") {
+  //   const command = data.slice(3);
+
+  //   if (command === pendingCommand) {
+  //     pendingCommand = "";
+
+  //     attempts = 0;
+
+  //     console.log("arduino >", data, "response");
+
+  //     return;
+  //   }
+
+  //   if (attempts >= 3) {
+  //     attempts = 0;
+
+  //     pendingCommand = "";
+
+  //     return;
+  //   }
+
+  //   sendCommand(pendingCommand);
+
+  //   attempts++;
+
+  //   console.log("arduino >", data, "retring");
+
+    // return;
   }
-
-  if (data.startsWith("[R]") && pendingCommand !== "") {
-    const command = data.slice(3);
-
-    if (command === pendingCommand) {
-      pendingCommand = "";
-
-      attempts = 0;
-
-      console.log("arduino >", data, "response");
-
-      return;
-    }
-
-    if (attempts >= 3) {
-      attempts = 0;
-
-      pendingCommand = "";
-
-      return;
-    }
-
-    sendCommand(pendingCommand);
-
-    attempts++;
-
-    console.log("arduino >", data, "retring");
-
-    return;
-  }
-
-  console.log("arduino > ", data);
 
   const sendEvent = events.find((event) => event.event === data);
 
