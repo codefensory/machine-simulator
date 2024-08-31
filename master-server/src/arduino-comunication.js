@@ -73,7 +73,7 @@ parser.on("data", (data) => {
   //   return;
   // }
 
-  const sendEvent = events.find((event) => event.event === data);
+  const sendEvent = events.find((event) => data.startsWith(event.event));
 
   if (sendEvent) {
     sendEvent.callback(data);
