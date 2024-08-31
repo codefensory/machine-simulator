@@ -85,7 +85,7 @@ function sendCommand(command) {
     return;
   }
 
-  comPort.write(command + "\n");
+  comPort.write(command);
 
   pendingCommand = command;
 
