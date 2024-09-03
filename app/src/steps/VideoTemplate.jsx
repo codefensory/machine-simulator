@@ -20,9 +20,9 @@ export function VideoTemplate({
       if (!hidden) {
         ref.current.play();
       } else if (!ref.current.paused) {
-        ref.current.pause();
-
         ref.current.currentTime = 0;
+
+        ref.current.pause();
       }
     };
 
@@ -45,9 +45,13 @@ export function VideoTemplate({
         preload="auto"
         autoPlay={rest.autoPlay && !hidden}
         className="video w-full h-full object-cover"
-        src={'https://simulador.codefensory.com:6243/videos/' + rest.src}
         onEnded={onEnded}
-      ></video>
+        src={undefined}
+      >
+        <source
+          src={'https://simulador.codefensory.com:6243/videos/' + rest.src}
+        ></source>
+      </video>
     </div>
   );
 }

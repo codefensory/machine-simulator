@@ -11,6 +11,10 @@ import { states } from './utils/constants';
 export function App() {
   const socket = useSocket();
 
+  const dev = window.location.pathname.includes('dev');
+
+  console.log(dev);
+
   const { remoteRef, localRef } = useCameraConnection({
     captureStream: (ref) => {
       return ref.current.captureStream();
@@ -41,14 +45,6 @@ export function App() {
     Promise.all(
       [...videos].map((video) => {
         return new Promise((resolve) => {
-          if (!video.src) {
-            console.log('video ignorado');
-
-            resolve();
-
-            return;
-          }
-
           video.addEventListener(
             'canplaythrough',
             () => {

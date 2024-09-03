@@ -68,6 +68,7 @@ let states = {
   },
   LIMPIEZA: {
     name: "LIMPIEZA",
+    arduinoCommand: "1",
     next: "ESPERA_RETOMAR",
   },
   ESPERA_RETOMAR: {
@@ -112,7 +113,11 @@ function changeState(state) {
 arduino.on("p", () => {
   console.log("starting simulation");
 
-  changeState(states.EXPLICACION);
+  if (currState !== states.ESPERA_LOOP) {
+    changeState(states.ESPERA_LOOP);
+  } else {
+    changeState(states.EXPLICACION);
+  }
 });
 
 arduino.on("Sensor 1 triggered", () => {
@@ -127,9 +132,14 @@ arduino.on("Sensor 2 triggered", () => {
   changeState(states.AGRADECIMIENTO);
 });
 
+let connections = 0;
+let readys = 0;
+
 // handle socket connections
 io.on("connection", (socket) => {
   console.log("a user connected");
+
+  connections++;
 
   socket.broadcast.emit("other-user");
 
@@ -148,7 +158,19 @@ io.on("connection", (socket) => {
   socket.on("confirm", () => {
     const nextState = states[currState.next];
 
+    readys = 0;
+
     changeState(nextState);
+  });
+
+  socket.on("ready", () => {
+    readys++;
+
+    console.log("ready", readys, connections);
+
+    if (readys === connections) {
+      io.emit("play", Date.now());
+    }
   });
 
   socket.on("move", (key) => {
@@ -157,7 +179,30 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
+
+    connections--;
+
+    if (readys === connections && connections > 0) {
+      io.emit("play");
+    }
   });
+
+  socket.on("now", (clientNow, cb) => {
+    cb(Date.now(), clientNow);
+  });
+
+  socket.on("diff", (clientNow, cb) => {
+    const diff = Date.now() - clientNow;
+
+    console.log("client-server diff", diff);
+
+    cb(diff);
+  });
+
+  setTimeout(() => {
+    readys = 0;
+    io.emit("test", Date.now());
+  }, 2000);
 });
 
 // -----------------------------------------------------------------------------

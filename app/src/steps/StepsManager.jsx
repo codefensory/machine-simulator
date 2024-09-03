@@ -11,7 +11,19 @@ import { states } from '../utils/constants';
 import { VideoTemplate } from './VideoTemplate';
 
 export const StepsManager = forwardRef(
-  ({ currentState, onNextState, onConfirm, onMove }, videoRef) => {
+  ({ currentState, onNextState, onConfirm: _onConfirm, onMove }, videoRef) => {
+    const isDev = window.location.pathname.includes('dev');
+
+    const onConfirm = (dev) => () => {
+      if (dev && isDev) {
+        _onConfirm();
+      }
+
+      if (!dev) {
+        _onConfirm();
+      }
+    };
+
     const canShow = (step) => {
       if (!states[currentState]) {
         return;
@@ -26,7 +38,7 @@ export const StepsManager = forwardRef(
       <>
         {(currentState === '' || canShow('ESPERA_LOOP')) && (
           <VideoTemplate
-            onClick={onConfirm}
+            onClick={onConfirm(false)}
             src="1-inicio.mp4"
             muted
             loop
@@ -34,7 +46,8 @@ export const StepsManager = forwardRef(
           />
         )}
         <VideoTemplate
-          onEnded={onConfirm}
+          onEnded={onConfirm(false)}
+          onClick={onConfirm(true)}
           muted
           src="2-explicacion.mp4"
           hidden={
@@ -43,12 +56,13 @@ export const StepsManager = forwardRef(
           }
         />
         {currentState === 'ESPERA_BOTON_INICIO' && (
-          <Modal onClick={onConfirm} />
+          <Modal onClick={onConfirm(false)} />
         )}
         {(currentState === '' || canShow('TUTORIAL')) && (
           <VideoTemplate
             muted
-            onEnded={onConfirm}
+            onClick={onConfirm(true)}
+            onEnded={onConfirm(false)}
             src="3-tutorial.mp4"
             hidden={currentState !== 'TUTORIAL'}
           />
@@ -67,7 +81,8 @@ export const StepsManager = forwardRef(
           <Controls onMove={onMove} />
         )}
         <VideoTemplate
-          onEnded={onConfirm}
+          onEnded={onConfirm(false)}
+          onClick={onConfirm(true)}
           muted
           src="4-cyber-ataque.mp4"
           hidden={currentState !== 'CIBER_ATAQUE'}
@@ -75,7 +90,7 @@ export const StepsManager = forwardRef(
         {(currentState === 'CIBER_ATAQUE' ||
           currentState === 'ESPERA_ACTIVAR_LIMPIEZA') && (
           <VideoTemplate
-            onClick={onConfirm}
+            onClick={onConfirm(false)}
             muted
             loop
             src="5-espera-analizar.mp4"
@@ -87,7 +102,8 @@ export const StepsManager = forwardRef(
           currentState === 'LIMPIEZA') && (
           <VideoTemplate
             muted
-            onEnded={onConfirm}
+            onClick={onConfirm(true)}
+            onEnded={onConfirm(false)}
             src="6-analizando.mp4"
             hidden={currentState !== 'LIMPIEZA'}
           />
@@ -95,7 +111,7 @@ export const StepsManager = forwardRef(
         {canShow('ESPERA_RETOMAR') && (
           <VideoTemplate
             muted
-            onClick={onConfirm}
+            onClick={onConfirm(false)}
             loop
             src="7-espera-retomar.mp4"
             hidden={currentState !== 'ESPERA_RETOMAR'}
@@ -103,7 +119,8 @@ export const StepsManager = forwardRef(
         )}
         <VideoTemplate
           muted
-          onEnded={onConfirm}
+          onEnded={onConfirm(false)}
+          onClick={onConfirm(true)}
           src="8-agradecimiento.mp4"
           hidden={currentState !== 'AGRADECIMIENTO'}
         />
