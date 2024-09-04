@@ -85,28 +85,28 @@ export function Controls({ onMove }) {
           <ButtonArrow
             className="left w-[150px] h-[150px]"
             onContextMenuCapture={(e) => e.preventDefault()}
-            onPointerDown={() => handleHorizontalDown('a')}
-            onPointerUp={() => handleHorizontalUp('a')}
+            onTouchStart={() => handleHorizontalDown('a')}
+            onTouchEnd={() => handleHorizontalUp('a')}
           />
           <ButtonArrow
             className="right w-[150px] h-[150px] -scale-x-[1]"
             onContextMenuCapture={(e) => e.preventDefault()}
-            onPointerDown={() => handleHorizontalDown('d')}
-            onPointerUp={() => handleHorizontalUp('d')}
+            onTouchStart={() => handleHorizontalDown('d')}
+            onTouchEnd={() => handleHorizontalUp('d')}
           />
         </div>
         <div className="flex flex-col gap-12">
           <ButtonArrow
             className="up w-[150px] h-[150px] rotate-90"
             onContextMenuCapture={(e) => e.preventDefault()}
-            onPointerDown={() => handleVerticalDown('w')}
-            onPointerUp={() => handleVerticalUp('w')}
+            onTouchStart={() => handleVerticalDown('w')}
+            onTouchEnd={() => handleVerticalUp('w')}
           />
           <ButtonArrow
             className="down w-[150px] h-[150px] -rotate-90"
             onContextMenuCapture={(e) => e.preventDefault()}
-            onPointerDown={() => handleVerticalDown('s')}
-            onPointerUp={() => handleVerticalUp('s')}
+            onTouchStart={() => handleVerticalDown('s')}
+            onTouchEnd={() => handleVerticalUp('s')}
           />
         </div>
       </div>
