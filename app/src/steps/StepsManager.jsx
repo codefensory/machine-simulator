@@ -36,7 +36,7 @@ export const StepsManager = forwardRef(
 
     return (
       <>
-        {(currentState === '' || canShow('ESPERA_LOOP')) && (
+        {canShow('ESPERA_LOOP') && (
           <VideoTemplate
             onClick={onConfirm(false)}
             src="1-inicio.mp4"
@@ -45,20 +45,27 @@ export const StepsManager = forwardRef(
             hidden={currentState !== 'ESPERA_LOOP'}
           />
         )}
-        <VideoTemplate
-          onEnded={onConfirm(false)}
-          onClick={onConfirm(true)}
-          muted
-          src="2-explicacion.mp4"
-          hidden={
-            currentState !== 'EXPLICACION' &&
-            currentState !== 'ESPERA_BOTON_INICIO'
-          }
-        />
+        {(currentState === 'ESPERA_LOOP' ||
+          currentState === 'EXPLICACION' ||
+          currentState === 'ESPERA_BOTON_INICIO') && (
+          <VideoTemplate
+            onEnded={onConfirm(false)}
+            onClick={onConfirm(true)}
+            muted
+            src="2-explicacion.mp4"
+            hidden={
+              currentState !== 'EXPLICACION' &&
+              currentState !== 'ESPERA_BOTON_INICIO'
+            }
+          />
+        )}
         {currentState === 'ESPERA_BOTON_INICIO' && (
           <Modal onClick={onConfirm(false)} />
         )}
-        {(currentState === '' || canShow('TUTORIAL')) && (
+
+        {(currentState === 'ESPERA_BOTON_INICIO' ||
+          currentState === 'ELEGIR_FONDO' ||
+          currentState === 'TUTORIAL') && (
           <VideoTemplate
             muted
             onClick={onConfirm(true)}
@@ -80,8 +87,10 @@ export const StepsManager = forwardRef(
           currentState === 'MOVIMIENTO_EXCAVADORA') && (
           <Controls onMove={onMove} />
         )}
+
         {(currentState === 'MOVIMIENTO_EXCAVADORA' ||
-          currentState === 'CIBER_ATAQUE') && (
+          currentState === 'CIBER_ATAQUE' ||
+          currentState === 'ESPERA_ACTIVAR_LIMPIEZA') && (
           <VideoTemplate
             onEnded={onConfirm(false)}
             onClick={onConfirm(true)}
@@ -100,8 +109,7 @@ export const StepsManager = forwardRef(
             hidden={currentState !== 'ESPERA_ACTIVAR_LIMPIEZA'}
           />
         )}
-        {(currentState === 'CIBER_ATAQUE' ||
-          currentState === 'ESPERA_ACTIVAR_LIMPIEZA' ||
+        {(currentState === 'ESPERA_ACTIVAR_LIMPIEZA' ||
           currentState === 'LIMPIEZA') && (
           <VideoTemplate
             muted
@@ -111,7 +119,7 @@ export const StepsManager = forwardRef(
             hidden={currentState !== 'LIMPIEZA'}
           />
         )}
-        {canShow('ESPERA_RETOMAR') && (
+        {(currentState === 'LIMPIEZA' || currentState === 'ESPERA_RETOMAR') && (
           <VideoTemplate
             muted
             onClick={onConfirm(false)}
@@ -120,13 +128,18 @@ export const StepsManager = forwardRef(
             hidden={currentState !== 'ESPERA_RETOMAR'}
           />
         )}
-        <VideoTemplate
-          muted
-          onEnded={onConfirm(false)}
-          onClick={onConfirm(true)}
-          src="8-agradecimiento.mp4"
-          hidden={currentState !== 'AGRADECIMIENTO'}
-        />
+
+        {(currentState === 'MOVIMIENTO_EXCAVADORA_FINAL' ||
+          currentState === 'TERMINADO' ||
+          currentState === 'AGRADECIMIENTO') && (
+          <VideoTemplate
+            muted
+            onEnded={onConfirm(false)}
+            onClick={onConfirm(true)}
+            src="8-agradecimiento.mp4"
+            hidden={currentState !== 'AGRADECIMIENTO'}
+          />
+        )}
       </>
     );
   }

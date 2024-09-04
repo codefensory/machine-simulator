@@ -46,12 +46,8 @@ export function VideoTemplate({
         autoPlay={rest.autoPlay && !hidden}
         className="video w-full h-full object-cover"
         onEnded={onEnded}
-        src={undefined}
-      >
-        <source
-          src={'https://simulador.codefensory.com:6243/videos/' + rest.src}
-        ></source>
-      </video>
+        src={'https://simulador.codefensory.com:6243/videos/' + rest.src}
+      ></video>
     </div>
   );
 }

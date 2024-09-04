@@ -89,13 +89,14 @@ export function AppScreen() {
     socket.emit('move', key);
   };
 
+  const hiddeCamera =
+    currentState === states.ESPERA_LOOP.name ||
+    currentState === states.EXPLICACION.name;
+
   return (
     <>
       <div
-        className={cn(
-          currentState === states.ESPERA_LOOP.name && 'opacity-0',
-          currentState !== states.ESPERA_LOOP.name && 'opacity-1'
-        )}
+        className={cn(hiddeCamera && 'opacity-0', !hiddeCamera && 'opacity-1')}
       >
         <LocalVideo2
           ref={localRef}

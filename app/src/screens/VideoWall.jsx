@@ -3,6 +3,7 @@ import Webcam from 'react-webcam';
 import { useCameraConnection } from '../hooks/useCameraConnection2';
 import { StepsManagerVW } from '../steps/StepsManagerVW';
 import cn from 'classnames';
+import { states } from '../utils/constants';
 
 export function VideoWallScreen() {
   const { localRef, remoteRef } = useCameraConnection({
@@ -16,7 +17,7 @@ export function VideoWallScreen() {
   const [isHome, setIsHome] = React.useState(true);
 
   const handleChangeState = (state) => {
-    if (state === 'ESPERA_LOOP') {
+    if (state === 'ESPERA_LOOP' || state === states.EXPLICACION.name) {
       setIsHome(true);
     } else {
       setIsHome(false);
