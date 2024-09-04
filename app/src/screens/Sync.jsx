@@ -15,39 +15,27 @@ export function SyncScreen() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    socket.on('test', (timestamp) => {
-      timestampRef.current = timestamp;
+    // timestampRef.current = timestamp;
 
-      videoRef.current.currentTime = socket.delay() / 1000;
+    // videoRef.current.currentTime = socket.delay() / 1000;
 
-      console.log(socket.delay());
+    // console.log(socket.delay());
 
-      console.log('readyState', videoRef.current.readyState);
-
-      if (videoRef.current.canplaythrough) {
-        socket.emit('ready');
-
-        return;
-      }
-
-      videoRef.current.addEventListener(
-        'canplaythrough',
-        () => {
-          socket.emit('ready');
-        },
-        {
-          once: true,
-        }
-      );
-    });
+    // videoRef.current.addEventListener(
+    //   'canplaythrough',
+    //   () => {
+    //     console.log('ready to play');
+    //   },
+    //   {
+    //     once: true,
+    //   }
+    // );
 
     socket.on('play', (timestamp) => {
       videoRef.current.play();
     });
 
     return () => {
-      socket.off('test');
-
       socket.off('play');
     };
   }, []);

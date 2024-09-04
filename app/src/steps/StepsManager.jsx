@@ -80,13 +80,16 @@ export const StepsManager = forwardRef(
           currentState === 'MOVIMIENTO_EXCAVADORA') && (
           <Controls onMove={onMove} />
         )}
-        <VideoTemplate
-          onEnded={onConfirm(false)}
-          onClick={onConfirm(true)}
-          muted
-          src="4-cyber-ataque.mp4"
-          hidden={currentState !== 'CIBER_ATAQUE'}
-        />
+        {(currentState === 'MOVIMIENTO_EXCAVADORA' ||
+          currentState === 'CIBER_ATAQUE') && (
+          <VideoTemplate
+            onEnded={onConfirm(false)}
+            onClick={onConfirm(true)}
+            muted
+            src="4-cyber-ataque.mp4"
+            hidden={currentState !== 'CIBER_ATAQUE'}
+          />
+        )}
         {(currentState === 'CIBER_ATAQUE' ||
           currentState === 'ESPERA_ACTIVAR_LIMPIEZA') && (
           <VideoTemplate

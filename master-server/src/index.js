@@ -163,18 +163,12 @@ io.on("connection", (socket) => {
     changeState(nextState);
   });
 
-  socket.on("ready", () => {
-    readys++;
-
-    console.log("ready", readys, connections);
-
-    if (readys === connections) {
-      io.emit("play", Date.now());
-    }
-  });
-
   socket.on("move", (key) => {
     arduino.sendCommand(key);
+  });
+
+  socket.on("play", () => {
+    io.emit("play");
   });
 
   socket.on("disconnect", () => {
@@ -198,11 +192,6 @@ io.on("connection", (socket) => {
 
     cb(diff);
   });
-
-  setTimeout(() => {
-    readys = 0;
-    io.emit("test", Date.now());
-  }, 2000);
 });
 
 // -----------------------------------------------------------------------------
