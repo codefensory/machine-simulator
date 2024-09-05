@@ -10,6 +10,8 @@ import { Modal } from '../components/Modal';
 import { states } from '../utils/constants';
 import { VideoTemplate } from './VideoTemplate';
 
+let timeout;
+
 export const StepsManager = forwardRef(
   ({ currentState, onPlaying, onConfirm: _onConfirm, onMove }, videoRef) => {
     const isDev = window.location.pathname.includes('dev');
@@ -34,12 +36,23 @@ export const StepsManager = forwardRef(
       );
     };
 
+    const handleStart = () => {
+      timeout = setTimeout(() => {
+        onConfirm(false)();
+      }, 3000);
+    };
+
+    const handleStop = () => {
+      clearTimeout(timeout);
+    };
+
     return (
       <>
         {canShow('ESPERA_LOOP') && (
           <VideoTemplate
             state="ESPERA_LOOP"
-            onClick={onConfirm(false)}
+            onPointerDown={handleStart}
+            onPointerUp={handleStop}
             onPlaying={onPlaying}
             src="1-inicio.mp4"
             muted
@@ -106,7 +119,7 @@ export const StepsManager = forwardRef(
             onEnded={onConfirm(false)}
             onClick={onConfirm(true)}
             muted
-            src="04 warning.mp4"
+            src="4-cyber-ataque.mp4"
             onPlaying={onPlaying}
             hidden={currentState !== 'CIBER_ATAQUE'}
           />
