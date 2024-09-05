@@ -19,3 +19,14 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+
+@font-face {
+  font-family: 'AMX';
+  src: url('assets/AMX-Bold.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  font-family: 'amx';
+}

@@ -23,7 +23,7 @@ function ButtonArrow({ className, ...rest }) {
   );
 }
 
-export function Controls({ onMove }) {
+export function Controls({ onMove, showTuto }) {
   const vertical = useRef('');
 
   const horizontal = useRef('');

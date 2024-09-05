@@ -93,7 +93,10 @@ export const StepsManager = forwardRef(
         ></video>
         {(currentState === 'MOVIMIENTO_EXCAVADORA_FINAL' ||
           currentState === 'MOVIMIENTO_EXCAVADORA') && (
-          <Controls onMove={onMove} />
+          <Controls
+            onMove={onMove}
+            showTuto={currentState === 'MOVIMIENTO_EXCAVADORA'}
+          />
         )}
 
         {(currentState === 'MOVIMIENTO_EXCAVADORA' ||
@@ -103,7 +106,7 @@ export const StepsManager = forwardRef(
             onEnded={onConfirm(false)}
             onClick={onConfirm(true)}
             muted
-            src="4-cyber-ataque.mp4"
+            src="04 warning.mp4"
             onPlaying={onPlaying}
             hidden={currentState !== 'CIBER_ATAQUE'}
           />

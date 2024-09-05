@@ -104,20 +104,29 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
       />
       <VideoTemplate
         state="CIBER_ATAQUE"
-        src="4-cyber-ataque-4k.mp4"
+        src="04 warning.mp4"
         autoPlay
-        hidden={
-          currentState !== 'CIBER_ATAQUE' &&
-          currentState !== 'ESPERA_ACTIVAR_LIMPIEZA'
-        }
+        hidden={currentState !== 'CIBER_ATAQUE'}
+      />
+      <VideoTemplate
+        state="ESPERA_ACTIVAR_LIMPIEZA"
+        loop
+        autoPlay
+        src="hacker 2.mp4"
+        hidden={currentState !== 'ESPERA_ACTIVAR_LIMPIEZA'}
       />
       <VideoTemplate
         state="LIMPIEZA"
-        src="6-analizando-4k.mp4"
+        src="5 cybervision.mp4"
         autoPlay
-        hidden={
-          currentState !== 'LIMPIEZA' && currentState !== 'ESPERA_RETOMAR'
-        }
+        hidden={currentState !== 'LIMPIEZA'}
+      />
+      <VideoTemplate
+        state="ESPERA_RETOMAR"
+        loop
+        src="6 retomar el control .mp4"
+        autoPlay
+        hidden={currentState !== 'ESPERA_RETOMAR'}
       />
       <VideoTemplate
         state="AGRADECIMIENTO"
