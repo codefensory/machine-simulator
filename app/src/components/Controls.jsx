@@ -74,7 +74,7 @@ export function Controls({ onMove, showTuto }) {
 
   return (
     <div className="relative">
-      {showingTutorial && (
+      {showingTutorial && showTuto && (
         <img
           src="/assets/backgrounds/tutorial_maquina.png"
           className="fixed top-0 left-0 w-full h-full object-cover"
