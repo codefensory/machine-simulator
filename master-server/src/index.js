@@ -167,8 +167,10 @@ io.on("connection", (socket) => {
     arduino.sendCommand(key);
   });
 
-  socket.on("play", () => {
-    io.emit("play");
+  socket.on("play", ({ state, timestamp }) => {
+    socket.broadcast.emit("play", { state, timestamp });
+
+    console.log("playing");
   });
 
   socket.on("disconnect", () => {

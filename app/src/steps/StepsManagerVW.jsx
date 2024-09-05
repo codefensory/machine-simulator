@@ -7,6 +7,10 @@ import { VideoTemplate } from './VideoTemplate';
 export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
   const socket = useSocket();
 
+  const videosRef = useRef({});
+
+  const lastTimestamp = useRef(Date.now());
+
   const [currentState, setCurrentStep] = useState(states.ESPERA_LOOP.name);
 
   const canShow = (step) => {
@@ -22,44 +26,74 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
       setCurrentStep(state);
     });
 
+    socket.on('play', ({ state, timestamp }) => {
+      console.log('play', state);
+
+      lastTimestamp.current = timestamp;
+
+      videosRef.current[state]?.play();
+    });
+
     return () => {
       socket.off('state');
+
+      socket.off('play');
     };
   }, [socket, setCurrentStep]);
 
-  console.log(currentState);
+  useEffect(() => {
+    const videos = document.querySelectorAll('.video');
+
+    for (const video of videos) {
+      videosRef.current[video.getAttribute('state')] = video;
+
+      video.addEventListener('timeupdate', () => {
+        if (video.paused) {
+          return;
+        }
+
+        const timeDiff =
+          (socket.now() / 1000 - lastTimestamp.current / 1000) % video.duration;
+
+        const timeRest = timeDiff - video.currentTime;
+
+        video.playbackRate = Math.max(0.8, Math.min(1.2, 1 + timeRest));
+
+        if (Math.abs(timeRest) > 0.1) {
+          // console.log(timeRest, timeDiff / 1000);
+
+          console.log(timeRest, video.currentTime);
+
+          // video.currentTime += timeRest + 0.4;
+        }
+      });
+    }
+  }, []);
 
   return (
     <>
-      {canShow('ESPERA_LOOP') && (
-        <VideoTemplate
-          src="1-inicio-4k.mp4"
-          loop
-          autoPlay
-          hidden={currentState !== 'ESPERA_LOOP'}
-        />
-      )}
-      {(currentState === 'ESPERA_LOOP' ||
-        currentState === 'EXPLICACION' ||
-        currentState === 'ESPERA_BOTON_INICIO') && (
-        <VideoTemplate
-          src="2-explicacion-4k.mp4"
-          autoPlay
-          hidden={
-            currentState !== 'EXPLICACION' &&
-            currentState !== 'ESPERA_BOTON_INICIO'
-          }
-        />
-      )}
-      {(currentState === 'ESPERA_BOTON_INICIO' ||
-        currentState === 'ELEGIR_FONDO' ||
-        currentState === 'TUTORIAL') && (
-        <VideoTemplate
-          src="3-tutorial-4k.mp4"
-          autoPlay
-          hidden={currentState !== 'TUTORIAL'}
-        />
-      )}
+      <VideoTemplate
+        state="ESPERA_LOOP"
+        src="1-inicio-4k.mp4"
+        loop
+        autoPlay
+        hidden={currentState !== 'ESPERA_LOOP'}
+      />
+      <VideoTemplate
+        state="EXPLICACION"
+        src="2-explicacion-4k.mp4"
+        autoPlay
+        hidden={
+          currentState !== 'EXPLICACION' &&
+          currentState !== 'ESPERA_BOTON_INICIO'
+        }
+      />
+      <VideoTemplate
+        state="TUTORIAL"
+        src="3-tutorial-4k.mp4"
+        autoPlay
+        hidden={currentState !== 'TUTORIAL'}
+      />
       <Webcam
         ref={videoRef}
         className="absolute w-full h-full bg-black object-cover top-0 left-0"
@@ -68,39 +102,29 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
           currentState !== 'MOVIMIENTO_EXCAVADORA_FINAL'
         }
       />
-      {(currentState === 'MOVIMIENTO_EXCAVADORA' ||
-        currentState === 'CIBER_ATAQUE' ||
-        currentState === 'ESPERA_ACTIVAR_LIMPIEZA') && (
-        <VideoTemplate
-          src="4-cyber-ataque-4k.mp4"
-          autoPlay
-          hidden={
-            currentState !== 'CIBER_ATAQUE' &&
-            currentState !== 'ESPERA_ACTIVAR_LIMPIEZA'
-          }
-        />
-      )}
-      {(currentState === 'CIBER_ATAQUE' ||
-        currentState === 'ESPERA_ACTIVAR_LIMPIEZA' ||
-        currentState === 'LIMPIEZA' ||
-        currentState === 'ESPERA_RETOMAR') && (
-        <VideoTemplate
-          src="6-analizando-4k.mp4"
-          autoPlay
-          hidden={
-            currentState !== 'LIMPIEZA' && currentState !== 'ESPERA_RETOMAR'
-          }
-        />
-      )}
-      {(currentState === 'MOVIMIENTO_EXCAVADORA_FINAL' ||
-        currentState === 'TERMINADO' ||
-        currentState === 'AGRADECIMIENTO') && (
-        <VideoTemplate
-          src="8-agradecimiento-4k.mp4"
-          autoPlay
-          hidden={currentState !== 'AGRADECIMIENTO'}
-        />
-      )}
+      <VideoTemplate
+        state="CIBER_ATAQUE"
+        src="4-cyber-ataque-4k.mp4"
+        autoPlay
+        hidden={
+          currentState !== 'CIBER_ATAQUE' &&
+          currentState !== 'ESPERA_ACTIVAR_LIMPIEZA'
+        }
+      />
+      <VideoTemplate
+        state="LIMPIEZA"
+        src="6-analizando-4k.mp4"
+        autoPlay
+        hidden={
+          currentState !== 'LIMPIEZA' && currentState !== 'ESPERA_RETOMAR'
+        }
+      />
+      <VideoTemplate
+        state="AGRADECIMIENTO"
+        src="8-agradecimiento-4k.mp4"
+        autoPlay
+        hidden={currentState !== 'AGRADECIMIENTO'}
+      />
     </>
   );
 });

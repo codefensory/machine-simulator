@@ -5,7 +5,7 @@ export function VideoTemplate({
   onClick,
   onEnded,
   hidden,
-  onPlay,
+  onPlaying,
   state,
   ...rest
 }) {
@@ -17,7 +17,25 @@ export function VideoTemplate({
     }
 
     const init = async () => {
+      if (rest.autoPlay) {
+        if (hidden) {
+          ref.current.currentTime = 0;
+
+          ref.current.pause();
+        }
+
+        return;
+      }
+
       if (!hidden) {
+        ref.current.addEventListener(
+          'timeupdate',
+          () => {
+            onPlaying?.(state);
+          },
+          { once: true }
+        );
+
         ref.current.play();
       } else if (!ref.current.paused) {
         ref.current.currentTime = 0;
@@ -42,7 +60,7 @@ export function VideoTemplate({
         {...rest}
         ref={ref}
         state={state}
-        preload="auto"
+        preload={rest.autoPlay ? 'auto' : 'metadata'}
         autoPlay={rest.autoPlay && !hidden}
         className="video w-full h-full object-cover"
         onEnded={onEnded}

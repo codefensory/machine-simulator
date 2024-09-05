@@ -75,14 +75,6 @@ export function AppScreen() {
     socket.emit('confirm');
   };
 
-  const handleNextState = async () => {
-    if (!canConfirm.current) {
-      return;
-    }
-
-    setCurrentState(states[currentState].next);
-  };
-
   const handleMove = (key) => {
     console.log('move', key);
 
@@ -91,7 +83,12 @@ export function AppScreen() {
 
   const hiddeCamera =
     currentState === states.ESPERA_LOOP.name ||
-    currentState === states.EXPLICACION.name;
+    currentState === states.EXPLICACION.name ||
+    currentState === states.ESPERA_BOTON_INICIO.name;
+
+  const handlePlaying = (state) => {
+    socket.emit('play', { state, timestamp: socket.now() });
+  };
 
   return (
     <>
@@ -108,7 +105,7 @@ export function AppScreen() {
         ref={remoteRef}
         currentState={currentState}
         onConfirm={handleConfirm}
-        onNextState={handleNextState}
+        onPlaying={handlePlaying}
         onMove={handleMove}
       />
     </>
