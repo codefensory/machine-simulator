@@ -94,6 +94,13 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         autoPlay
         hidden={currentState !== 'TUTORIAL'}
       />
+
+      {currentState === 'MOVIMIENTO_EXCAVADORA' && (
+        <audio id="myAudio">
+          <source src="/manejo.mp3" type="audio/mpeg"></source>
+        </audio>
+      )}
+
       <Webcam
         ref={videoRef}
         className="absolute w-full h-full bg-black object-cover top-0 left-0"
