@@ -9,6 +9,8 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
 
   const videosRef = useRef({});
 
+  const audioRef = useRef(null);
+
   const lastTimestamp = useRef(Date.now());
 
   const [currentState, setCurrentStep] = useState(states.ESPERA_LOOP.name);
@@ -24,6 +26,10 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
       onChangeState?.(state);
 
       setCurrentStep(state);
+
+      if (state === states.MOVIMIENTO_EXCAVADORA.name) {
+        audioRef.current.play();
+      }
     });
 
     socket.on('play', ({ state, timestamp }) => {
@@ -60,11 +66,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         video.playbackRate = Math.max(0.8, Math.min(1.2, 1 + timeRest));
 
         if (Math.abs(timeRest) > 0.1) {
-          // console.log(timeRest, timeDiff / 1000);
-
           console.log(timeRest, video.currentTime);
-
-          // video.currentTime += timeRest + 0.4;
         }
       });
     }
@@ -95,11 +97,9 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         hidden={currentState !== 'TUTORIAL'}
       />
 
-      {currentState === 'MOVIMIENTO_EXCAVADORA' && (
-        <audio id="myAudio">
-          <source src="/manejo.mp3" type="audio/mpeg"></source>
-        </audio>
-      )}
+      <audio id="myAudio" autoPlay ref={audioRef}>
+        <source src="/manejo.mp3" type="audio/mpeg"></source>
+      </audio>
 
       <Webcam
         ref={videoRef}
