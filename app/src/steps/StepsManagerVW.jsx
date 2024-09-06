@@ -39,6 +39,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
 
       if (
         [
+          states.ELEGIR_FONDO.name,
           states.TUTORIAL.name,
           states.LIMPIEZA.name,
           states.MOVIMIENTO_EXCAVADORA_FINAL.name,
