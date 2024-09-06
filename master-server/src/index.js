@@ -125,7 +125,7 @@ arduino.on("p", () => {
     }
 
     if (pCount === 3) {
-      changeState(states.AGRADECIMIENTO);
+      changeState(states.ESPERA_LOOP);
     }
 
     pCount = 0;
