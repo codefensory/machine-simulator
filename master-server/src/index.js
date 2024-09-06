@@ -137,12 +137,20 @@ arduino.on("p", () => {
 });
 
 arduino.on("Sensor 1 triggered", () => {
+  if (currState.name !== states.MOVIMIENTO_EXCAVADORA.name) {
+    return;
+  }
+
   console.log("Rele 1");
 
   changeState(states.CIBER_ATAQUE);
 });
 
 arduino.on("Sensor 2 triggered", () => {
+  if (currState.name !== states.MOVIMIENTO_EXCAVADORA_FINAL.name) {
+    return;
+  }
+
   console.log("Rele 2");
 
   changeState(states.TERMINANDO);
