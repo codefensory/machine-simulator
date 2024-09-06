@@ -101,7 +101,8 @@ export const StepsManager = forwardRef(
           onPlaying={onPlaying}
           hidden={
             currentState !== 'MOVIMIENTO_EXCAVADORA' &&
-            currentState !== 'MOVIMIENTO_EXCAVADORA_FINAL'
+            currentState !== 'MOVIMIENTO_EXCAVADORA_FINAL' &&
+            currentState !== 'TERMINANDO'
           }
         ></video>
         {(currentState === 'MOVIMIENTO_EXCAVADORA_FINAL' ||

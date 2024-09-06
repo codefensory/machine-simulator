@@ -33,7 +33,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
 
       if (state === states.MOVIMIENTO_EXCAVADORA.name) {
         audioRef.current.play();
-      } else if (audioRef.current.currenTime > 0) {
+      } else {
         audioRef.current.currenTime = 0;
 
         audioRef.current.pause();
@@ -41,7 +41,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
 
       if (state === states.TERMINANDO.name) {
         audioFinRef.current.play();
-      } else if (audioFinRef.current.currenTime > 0) {
+      } else {
         audioFinRef.current.currenTime = 0;
 
         audioFinRef.current.pause();
@@ -56,7 +56,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         ].includes(state)
       ) {
         audioClickRef.current.play();
-      } else if (audioClickRef.current.currenTime > 0) {
+      } else {
         audioClickRef.current.currenTime = 0;
 
         audioClickRef.current.pause();
@@ -158,7 +158,8 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         className="absolute w-full h-full bg-black object-cover top-0 left-0"
         hidden={
           currentState !== 'MOVIMIENTO_EXCAVADORA' &&
-          currentState !== 'MOVIMIENTO_EXCAVADORA_FINAL'
+          currentState !== 'MOVIMIENTO_EXCAVADORA_FINAL' &&
+          currentState !== 'TERMINANDO'
         }
       />
       <VideoTemplate
