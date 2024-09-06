@@ -120,15 +120,15 @@ arduino.on("p", () => {
   clearTimeout(restarting);
 
   restarting = setTimeout(() => {
-    if (p === 1) {
+    if (pCount === 1) {
       changeState(states.EXPLICACION);
     }
 
-    if (p === 3) {
+    if (pCount === 3) {
       changeState(states.AGRADECIMIENTO);
     }
 
-    p = 0;
+    pCount = 0;
   }, 500);
 });
 
