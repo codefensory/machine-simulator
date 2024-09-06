@@ -101,12 +101,10 @@ export const StepsManager = forwardRef(
             showTuto={currentState === 'MOVIMIENTO_EXCAVADORA'}
           />
         )}
-        {currentState === 'TERMINADO' && (
-          <img
-            src="/assets/backgrounds/carga_exitosa.png"
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-auto"
-          />
-        )}
+        <img
+          src="/assets/backgrounds/carga_exitosa.png"
+          className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-auto"
+        />
         <VideoTemplate
           state="CIBER_ATAQUE"
           onEnded={onConfirm(false)}
