@@ -38,7 +38,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
           states.TUTORIAL.name,
           states.LIMPIEZA.name,
           states.MOVIMIENTO_EXCAVADORA_FINAL.name,
-        ].includes(states)
+        ].includes(state)
       ) {
         audioClickRef.current.play();
       }
