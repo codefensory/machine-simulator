@@ -105,10 +105,18 @@ export const StepsManager = forwardRef(
           }
         ></video>
         {(currentState === 'MOVIMIENTO_EXCAVADORA_FINAL' ||
-          currentState === 'MOVIMIENTO_EXCAVADORA') && (
+          currentState === 'MOVIMIENTO_EXCAVADORA' ||
+          currentState === 'TERMINADO') && (
           <Controls
             onMove={onMove}
             showTuto={currentState === 'MOVIMIENTO_EXCAVADORA'}
+          />
+        )}
+
+        {currentState === 'TERMINADO' && (
+          <img
+            src="/assets/backgrounds/carga_exitosa.png"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-auto"
           />
         )}
 
@@ -157,13 +165,6 @@ export const StepsManager = forwardRef(
             src="7-espera-retomar.mp4"
             onPlaying={onPlaying}
             hidden={currentState !== 'ESPERA_RETOMAR'}
-          />
-        )}
-
-        {currentState === 'TERMINADO' && (
-          <img
-            src="/assets/backgrounds/carga_exitosa.png"
-            className="w-[560px]"
           />
         )}
 
