@@ -97,8 +97,11 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         hidden={currentState !== 'TUTORIAL'}
       />
 
-      <audio id="myAudio" autoPlay ref={audioRef}>
-        <source src="/manejo.mp3" type="audio/mpeg"></source>
+      <audio id="myAudio" ref={audioRef}>
+        <source
+          src="https://simulador.codefensory.com/assets/manejo.mp3"
+          type="audio/mpeg"
+        ></source>
       </audio>
 
       <Webcam
