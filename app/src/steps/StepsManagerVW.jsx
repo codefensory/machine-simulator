@@ -32,21 +32,17 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
       setCurrentStep(state);
 
       if (state === states.MOVIMIENTO_EXCAVADORA.name) {
-        audioRef.current.currenTime = 0;
-
         audioRef.current.play();
       } else {
-        audioRef.current.currenTime = 0;
-
         audioRef.current.pause();
+
+        audioRef.current.currentTime = 0;
       }
 
       if (state === states.TERMINANDO.name) {
-        audioFinRef.current.currenTime = 0;
-
         audioFinRef.current.play();
       } else {
-        audioFinRef.current.currenTime = 0;
+        audioFinRef.current.currentTime = 0;
 
         audioFinRef.current.pause();
       }
@@ -59,11 +55,9 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
           states.MOVIMIENTO_EXCAVADORA_FINAL.name,
         ].includes(state)
       ) {
-        audioClickRef.current.currenTime = 0;
-
         audioClickRef.current.play();
       } else {
-        audioClickRef.current.currenTime = 0;
+        audioClickRef.current.currentTime = 0;
 
         audioClickRef.current.pause();
       }

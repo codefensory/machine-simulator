@@ -19,9 +19,9 @@ export function VideoTemplate({
     const init = async () => {
       if (rest.autoPlay) {
         if (hidden) {
-          ref.current.currentTime = 0;
-
           ref.current.pause();
+
+          ref.current.currentTime = 0;
         }
 
         return;
@@ -37,10 +37,10 @@ export function VideoTemplate({
         );
 
         ref.current.play();
-      } else if (!ref.current.paused) {
-        ref.current.currentTime = 0;
-
+      } else {
         ref.current.pause();
+
+        ref.current.currentTime = 0;
       }
     };
 
