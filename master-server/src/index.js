@@ -110,14 +110,26 @@ function changeState(state) {
   }
 }
 
-arduino.on("p", () => {
-  console.log("starting simulation");
+let restarting;
 
-  if (currState !== states.ESPERA_LOOP) {
-    changeState(states.ESPERA_LOOP);
-  } else {
-    changeState(states.EXPLICACION);
-  }
+let pCount = 0;
+
+arduino.on("p", () => {
+  pCount++;
+
+  clearTimeout(restarting);
+
+  restarting = setTimeout(() => {
+    if (p === 1) {
+      changeState(states.EXPLICACION);
+    }
+
+    if (p === 3) {
+      changeState(states.AGRADECIMIENTO);
+    }
+
+    p = 0;
+  }, 500);
 });
 
 arduino.on("Sensor 1 triggered", () => {

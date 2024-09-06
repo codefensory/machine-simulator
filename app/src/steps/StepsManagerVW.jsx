@@ -31,6 +31,10 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
 
       if (state === states.MOVIMIENTO_EXCAVADORA.name) {
         audioRef.current.play();
+      } else if (audioRef.current.currenTime > 0) {
+        audioRef.current.currenTime = 0;
+
+        audioRef.current.pause();
       }
 
       if (
@@ -41,6 +45,10 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         ].includes(state)
       ) {
         audioClickRef.current.play();
+      } else if (audioClickRef.current.currenTime > 0) {
+        audioClickRef.current.currenTime = 0;
+
+        audioClickRef.current.pause();
       }
     });
 
