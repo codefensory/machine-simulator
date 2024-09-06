@@ -62,7 +62,7 @@ export function VideoTemplate({
         state={state}
         preload={rest.autoPlay ? 'auto' : 'metadata'}
         autoPlay={rest.autoPlay && !hidden}
-        className="video w-full h-full object-cover"
+        className="video w-full h-full object-contain"
         onEnded={onEnded}
         src={'https://simulador.codefensory.com:6243/videos/' + rest.src}
       ></video>
