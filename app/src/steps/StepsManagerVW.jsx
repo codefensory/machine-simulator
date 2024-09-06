@@ -131,7 +131,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         state="ESPERA_ACTIVAR_LIMPIEZA"
         loop
         autoPlay
-        src="5-espera-analizar-4k "
+        src="5-espera-analizar-4k.mp4"
         hidden={currentState !== 'ESPERA_ACTIVAR_LIMPIEZA'}
       />
       <VideoTemplate
