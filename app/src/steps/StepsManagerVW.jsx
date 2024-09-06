@@ -101,7 +101,7 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
 
       <audio ref={audioRef}>
         <source
-          src="https://simulador.codefensory.com/assets/manejo.mp3"
+          src="https://simulador.codefensory.com/assets/voz.mp3"
           type="audio/mpeg"
         ></source>
       </audio>
