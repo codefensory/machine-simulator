@@ -32,6 +32,16 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
       if (state === states.MOVIMIENTO_EXCAVADORA.name) {
         audioRef.current.play();
       }
+
+      if (
+        [
+          states.TUTORIAL.name,
+          states.LIMPIEZA.name,
+          states.MOVIMIENTO_EXCAVADORA_FINAL.name,
+        ].includes(states)
+      ) {
+        audioClickRef.current.play();
+      }
     });
 
     socket.on('play', ({ state, timestamp }) => {
