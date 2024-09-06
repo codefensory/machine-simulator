@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  forwardRef,
-  useRef,
-} from 'react';
+import React, { forwardRef } from 'react';
 import { Controls } from '../components/Controls';
 import { Modal } from '../components/Modal';
 import { states } from '../utils/constants';
@@ -106,8 +100,7 @@ export const StepsManager = forwardRef(
           }
         ></video>
         {(currentState === 'MOVIMIENTO_EXCAVADORA_FINAL' ||
-          currentState === 'MOVIMIENTO_EXCAVADORA' ||
-          currentState === 'TERMINANDO') && (
+          currentState === 'MOVIMIENTO_EXCAVADORA') && (
           <Controls
             onMove={onMove}
             showTuto={currentState === 'MOVIMIENTO_EXCAVADORA'}

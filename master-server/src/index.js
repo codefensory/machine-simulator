@@ -128,6 +128,10 @@ arduino.on("p", () => {
       changeState(states.ESPERA_LOOP);
     }
 
+    if (pCount === 5) {
+      io.emit("restart");
+    }
+
     pCount = 0;
   }, 500);
 });
