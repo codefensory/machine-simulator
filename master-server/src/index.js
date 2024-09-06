@@ -120,7 +120,7 @@ arduino.on("p", () => {
   clearTimeout(restarting);
 
   restarting = setTimeout(() => {
-    if (pCount === 1 && currState === states.ESPERA_LOOP.name) {
+    if (pCount === 1 && currState.name === states.ESPERA_LOOP.name) {
       changeState(states.EXPLICACION);
     }
 
