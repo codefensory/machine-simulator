@@ -160,6 +160,13 @@ export const StepsManager = forwardRef(
           />
         )}
 
+        {currentState === 'TERMINADO' && (
+          <img
+            src="/assets/backgrounds/carga_exitosa.png"
+            className="w-[560px]"
+          />
+        )}
+
         {(currentState === 'MOVIMIENTO_EXCAVADORA_FINAL' ||
           currentState === 'TERMINADO' ||
           currentState === 'AGRADECIMIENTO') && (

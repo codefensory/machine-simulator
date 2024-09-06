@@ -28,6 +28,10 @@ export function AppScreen() {
       setCurrentState(state);
 
       canConfirm.current = true;
+
+      if (state === states.TERMINANDO.name) {
+        setTimeout(handleConfirm, 5000);
+      }
     });
 
     return () => {

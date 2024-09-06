@@ -13,6 +13,8 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
 
   const audioClickRef = useRef(null);
 
+  const audioFinRef = useRef(null);
+
   const lastTimestamp = useRef(Date.now());
 
   const [currentState, setCurrentStep] = useState(states.ESPERA_LOOP.name);
@@ -35,6 +37,14 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
         audioRef.current.currenTime = 0;
 
         audioRef.current.pause();
+      }
+
+      if (state === states.TERMINANDO.name) {
+        audioFinRef.current.play();
+      } else if (audioFinRef.current.currenTime > 0) {
+        audioFinRef.current.currenTime = 0;
+
+        audioFinRef.current.pause();
       }
 
       if (
@@ -93,6 +103,10 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
     }
   }, []);
 
+  const handleFinAudio = () => {
+    socket.emit('confirm');
+  };
+
   return (
     <>
       <VideoTemplate
@@ -128,6 +142,13 @@ export const StepsManagerVW = forwardRef(({ onChangeState }, videoRef) => {
       <audio ref={audioClickRef}>
         <source
           src="https://simulador.codefensory.com/assets/click.mp3"
+          type="audio/mpeg"
+        ></source>
+      </audio>
+
+      <audio ref={audioFinRef} onEnded={handleFinAudio}>
+        <source
+          src="https://simulador.codefensory.com/assets/fin.mp3"
           type="audio/mpeg"
         ></source>
       </audio>

@@ -141,7 +141,7 @@ arduino.on("Sensor 1 triggered", () => {
 arduino.on("Sensor 2 triggered", () => {
   console.log("Rele 2");
 
-  changeState(states.AGRADECIMIENTO);
+  changeState(states.TERMINANDO);
 });
 
 let connections = 0;
